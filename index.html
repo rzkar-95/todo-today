@@ -17,9 +17,7 @@
     --done-text: #b5b0a5;
     --shadow: rgba(0,0,0,0.08);
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   body {
     background: var(--bg);
     min-height: 100vh;
@@ -27,75 +25,101 @@
     display: flex;
     justify-content: center;
     padding: 32px 16px 64px;
-    background-image: 
+    background-image:
       radial-gradient(ellipse at 20% 0%, rgba(200,75,47,0.06) 0%, transparent 50%),
       radial-gradient(ellipse at 80% 100%, rgba(47,109,200,0.05) 0%, transparent 50%);
   }
+  .container { width: 100%; max-width: 480px; }
 
-  .container {
-    width: 100%;
-    max-width: 480px;
-  }
-
-  /* Header */
-  .header {
-    margin-bottom: 32px;
+  /* Login Screen */
+  .login-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    text-align: center;
     animation: fadeDown 0.6s ease both;
   }
-
-  .date-label {
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--muted);
-    font-weight: 400;
-    margin-bottom: 4px;
-  }
-
-  .day-title {
+  .login-title {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(36px, 10vw, 52px);
+    font-size: 52px;
+    font-weight: 700;
     color: var(--ink);
     line-height: 1;
-    font-weight: 700;
+    margin-bottom: 8px;
   }
-
-  .day-title em {
-    font-style: italic;
-    color: var(--accent);
+  .login-title em { font-style: italic; color: var(--accent); }
+  .login-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 40px;
+    font-weight: 300;
   }
-
-  .progress-bar-wrap {
-    margin-top: 16px;
+  .google-btn {
     display: flex;
     align-items: center;
     gap: 12px;
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 24px;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    box-shadow: 0 2px 12px var(--shadow);
+    transition: all 0.2s;
   }
+  .google-btn:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 4px 20px var(--shadow); }
+  .google-btn svg { width: 20px; height: 20px; }
 
-  .progress-bar {
-    flex: 1;
-    height: 3px;
-    background: var(--line);
-    border-radius: 2px;
-    overflow: hidden;
+  /* App Screen */
+  .app-screen { display: none; }
+  .app-screen.visible { display: block; }
+
+  /* User bar */
+  .user-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 28px;
+    animation: fadeDown 0.4s ease both;
   }
-
-  .progress-fill {
-    height: 100%;
-    background: var(--accent);
-    border-radius: 2px;
-    transition: width 0.4s ease;
-    width: 0%;
+  .user-avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--line);
   }
-
-  .progress-text {
-    font-size: 12px;
+  .user-name { font-size: 13px; color: var(--muted); flex: 1; }
+  .logout-btn {
+    background: none;
+    border: 1.5px solid var(--line);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
     color: var(--muted);
-    white-space: nowrap;
-    font-weight: 400;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    transition: all 0.2s;
   }
+  .logout-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* Add task input */
+  /* Header */
+  .header { margin-bottom: 32px; animation: fadeDown 0.6s ease both; }
+  .date-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); font-weight: 400; margin-bottom: 4px; }
+  .day-title { font-family: 'Playfair Display', serif; font-size: clamp(36px, 10vw, 52px); color: var(--ink); line-height: 1; font-weight: 700; }
+  .day-title em { font-style: italic; color: var(--accent); }
+  .progress-bar-wrap { margin-top: 16px; display: flex; align-items: center; gap: 12px; }
+  .progress-bar { flex: 1; height: 3px; background: var(--line); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; width: 0%; }
+  .progress-text { font-size: 12px; color: var(--muted); white-space: nowrap; font-weight: 400; }
+
+  /* Add task */
   .add-section {
     background: var(--paper);
     border-radius: 14px;
@@ -107,309 +131,163 @@
     align-items: center;
     animation: fadeDown 0.6s 0.1s ease both;
   }
-
-  .add-input {
-    flex: 1;
-    border: none;
-    background: transparent;
-    font-family: 'Outfit', sans-serif;
-    font-size: 14px;
-    color: var(--ink);
-    outline: none;
-    font-weight: 400;
-  }
-
-  .add-input::placeholder {
-    color: var(--muted);
-    font-style: italic;
-  }
-
-  .add-btn {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: var(--ink);
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    transition: transform 0.2s, background 0.2s;
-  }
-
+  .add-input { flex: 1; border: none; background: transparent; font-family: 'Outfit', sans-serif; font-size: 14px; color: var(--ink); outline: none; }
+  .add-input::placeholder { color: var(--muted); font-style: italic; }
+  .add-btn { width: 32px; height: 32px; border-radius: 50%; background: var(--ink); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 0.2s, background 0.2s; }
   .add-btn:hover { background: var(--accent); transform: scale(1.08); }
-
   .add-btn svg { width: 14px; height: 14px; stroke: white; fill: none; stroke-width: 2.5; }
 
-  /* Priority selector */
-  .priority-row {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 20px;
-    animation: fadeDown 0.6s 0.15s ease both;
-  }
-
-  .prio-btn {
-    font-size: 11px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    padding: 5px 12px;
-    border-radius: 20px;
-    border: 1.5px solid var(--line);
-    background: transparent;
-    color: var(--muted);
-    cursor: pointer;
-    font-family: 'Outfit', sans-serif;
-    transition: all 0.2s;
-  }
-
+  /* Priority */
+  .priority-row { display: flex; gap: 6px; margin-bottom: 20px; animation: fadeDown 0.6s 0.15s ease both; }
+  .prio-btn { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 12px; border-radius: 20px; border: 1.5px solid var(--line); background: transparent; color: var(--muted); cursor: pointer; font-family: 'Outfit', sans-serif; transition: all 0.2s; }
   .prio-btn.active-tinggi { border-color: var(--accent); color: var(--accent); background: rgba(200,75,47,0.07); }
   .prio-btn.active-sedang { border-color: #d4a020; color: #d4a020; background: rgba(212,160,32,0.07); }
   .prio-btn.active-rendah { border-color: var(--accent2); color: var(--accent2); background: rgba(47,109,200,0.07); }
 
-  /* Category tabs */
-  .tabs {
-    display: flex;
-    gap: 0;
-    margin-bottom: 16px;
-    border-bottom: 2px solid var(--line);
-    animation: fadeDown 0.6s 0.2s ease both;
-  }
-
-  .tab {
-    font-size: 12px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    padding: 8px 16px;
-    cursor: pointer;
-    color: var(--muted);
-    border-bottom: 2px solid transparent;
-    margin-bottom: -2px;
-    transition: all 0.2s;
-    font-weight: 500;
-    background: none;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    font-family: 'Outfit', sans-serif;
-  }
-
+  /* Tabs */
+  .tabs { display: flex; margin-bottom: 16px; border-bottom: 2px solid var(--line); animation: fadeDown 0.6s 0.2s ease both; }
+  .tab { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; padding: 8px 16px; cursor: pointer; color: var(--muted); border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.2s; font-weight: 500; background: none; border-top: none; border-left: none; border-right: none; font-family: 'Outfit', sans-serif; }
   .tab.active { color: var(--ink); border-bottom-color: var(--ink); }
 
-  /* Task list */
-  .task-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    animation: fadeDown 0.6s 0.25s ease both;
-  }
-
-  .task-item {
-    background: var(--paper);
-    border-radius: 12px;
-    padding: 14px 16px;
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    box-shadow: 0 1px 8px var(--shadow);
-    transition: transform 0.2s, opacity 0.3s;
-    cursor: default;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .task-item::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
-  }
-
+  /* Tasks */
+  .task-list { display: flex; flex-direction: column; gap: 8px; animation: fadeDown 0.6s 0.25s ease both; }
+  .task-item { background: var(--paper); border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 12px; box-shadow: 0 1px 8px var(--shadow); transition: transform 0.2s, opacity 0.3s; position: relative; overflow: hidden; }
+  .task-item::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; border-radius: 12px 0 0 12px; }
   .task-item.prio-tinggi::before { background: var(--accent); }
   .task-item.prio-sedang::before { background: #d4a020; }
   .task-item.prio-rendah::before { background: var(--accent2); }
-
   .task-item:hover { transform: translateX(3px); }
-
   .task-item.done { opacity: 0.5; }
   .task-item.done .task-text { text-decoration: line-through; color: var(--done-text); }
-
-  .check-btn {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 1.5px solid var(--line);
-    background: transparent;
-    cursor: pointer;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-    margin-top: 1px;
-  }
-
+  .check-btn { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--line); background: transparent; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; margin-top: 1px; }
   .check-btn:hover { border-color: var(--accent); }
   .task-item.done .check-btn { background: var(--accent); border-color: var(--accent); }
-
   .check-btn svg { width: 10px; height: 10px; stroke: white; fill: none; stroke-width: 2.5; display: none; }
   .task-item.done .check-btn svg { display: block; }
-
   .task-content { flex: 1; }
-
-  .task-text {
-    font-size: 14px;
-    color: var(--ink);
-    line-height: 1.4;
-    font-weight: 400;
-  }
-
-  .task-meta {
-    display: flex;
-    gap: 8px;
-    margin-top: 4px;
-    align-items: center;
-  }
-
-  .task-prio {
-    font-size: 10px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    font-weight: 500;
-  }
-
+  .task-text { font-size: 14px; color: var(--ink); line-height: 1.4; font-weight: 400; }
+  .task-meta { display: flex; gap: 8px; margin-top: 4px; align-items: center; }
+  .task-prio { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; font-weight: 500; }
   .prio-tinggi .task-prio { color: var(--accent); }
   .prio-sedang .task-prio { color: #d4a020; }
   .prio-rendah .task-prio { color: var(--accent2); }
-
-  .task-time {
-    font-size: 11px;
-    color: var(--muted);
-  }
-
-  .delete-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--line);
-    padding: 2px;
-    transition: color 0.2s;
-    flex-shrink: 0;
-  }
-
+  .task-time { font-size: 11px; color: var(--muted); }
+  .delete-btn { background: none; border: none; cursor: pointer; color: var(--line); padding: 2px; transition: color 0.2s; flex-shrink: 0; }
   .delete-btn:hover { color: var(--accent); }
   .delete-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
 
-  /* Empty state */
-  .empty-state {
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--muted);
-    display: none;
-  }
-
+  .empty-state { text-align: center; padding: 40px 20px; color: var(--muted); display: none; }
   .empty-state.visible { display: block; }
-
-  .empty-state p {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 16px;
-    margin-bottom: 6px;
-    color: var(--ink);
-  }
-
+  .empty-state p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 16px; margin-bottom: 6px; color: var(--ink); }
   .empty-state span { font-size: 12px; }
 
-  /* Footer */
-  .footer {
-    margin-top: 32px;
-    text-align: center;
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 1px;
-  }
-
-  .clear-done {
-    background: none;
-    border: 1.5px solid var(--line);
-    border-radius: 20px;
-    padding: 6px 16px;
-    font-size: 11px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--muted);
-    cursor: pointer;
-    font-family: 'Outfit', sans-serif;
-    transition: all 0.2s;
-    margin-top: 12px;
-  }
-
+  .footer { margin-top: 32px; text-align: center; }
+  .clear-done { background: none; border: 1.5px solid var(--line); border-radius: 20px; padding: 6px 16px; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); cursor: pointer; font-family: 'Outfit', sans-serif; transition: all 0.2s; }
   .clear-done:hover { border-color: var(--accent); color: var(--accent); }
 
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  /* Loading */
+  .loading { text-align: center; padding: 20px; color: var(--muted); font-size: 13px; font-style: italic; }
 
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateX(-12px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes slideIn { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: translateX(0); } }
   .task-item { animation: slideIn 0.3s ease both; }
 </style>
 </head>
 <body>
 <div class="container">
 
-  <div class="header">
-    <div class="date-label" id="dateLabel"></div>
-    <div class="day-title" id="dayTitle"></div>
-    <div class="progress-bar-wrap">
-      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-      <div class="progress-text" id="progressText">0 / 0 selesai</div>
-    </div>
-  </div>
-
-  <div class="add-section">
-    <input class="add-input" id="taskInput" type="text" placeholder="Tambah tugas hari ini…" maxlength="120">
-    <button class="add-btn" onclick="addTask()" title="Tambah">
-      <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+  <!-- Login Screen -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-title">Hari<br><em>Ini</em></div>
+    <p class="login-sub">To-do list yang sync di semua device kamu</p>
+    <button class="google-btn" onclick="loginGoogle()">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+      </svg>
+      Masuk dengan Google
     </button>
   </div>
 
-  <div class="priority-row">
-    <button class="prio-btn active-tinggi" data-prio="tinggi" onclick="selectPrio(this)">● Tinggi</button>
-    <button class="prio-btn" data-prio="sedang" onclick="selectPrio(this)">● Sedang</button>
-    <button class="prio-btn" data-prio="rendah" onclick="selectPrio(this)">● Rendah</button>
-  </div>
+  <!-- App Screen -->
+  <div class="app-screen" id="appScreen">
 
-  <div class="tabs">
-    <button class="tab active" onclick="filterTasks('semua', this)">Semua</button>
-    <button class="tab" onclick="filterTasks('aktif', this)">Aktif</button>
-    <button class="tab" onclick="filterTasks('selesai', this)">Selesai</button>
-  </div>
+    <div class="user-bar" id="userBar">
+      <img class="user-avatar" id="userAvatar" src="" alt="">
+      <span class="user-name" id="userName"></span>
+      <button class="logout-btn" onclick="logout()">Keluar</button>
+    </div>
 
-  <div class="task-list" id="taskList"></div>
-  <div class="empty-state" id="emptyState">
-    <p>Hari ini masih kosong.</p>
-    <span>Tambahkan tugas pertamamu di atas ✦</span>
-  </div>
+    <div class="header">
+      <div class="date-label" id="dateLabel"></div>
+      <div class="day-title" id="dayTitle"></div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="progress-text" id="progressText">0 / 0 selesai</div>
+      </div>
+    </div>
 
-  <div class="footer">
-    <button class="clear-done" onclick="clearDone()">Hapus yang selesai</button>
-  </div>
+    <div class="add-section">
+      <input class="add-input" id="taskInput" type="text" placeholder="Tambah tugas hari ini…" maxlength="120">
+      <button class="add-btn" onclick="addTask()">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+    </div>
 
+    <div class="priority-row">
+      <button class="prio-btn active-tinggi" data-prio="tinggi" onclick="selectPrio(this)">● Tinggi</button>
+      <button class="prio-btn" data-prio="sedang" onclick="selectPrio(this)">● Sedang</button>
+      <button class="prio-btn" data-prio="rendah" onclick="selectPrio(this)">● Rendah</button>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" onclick="filterTasks('semua', this)">Semua</button>
+      <button class="tab" onclick="filterTasks('aktif', this)">Aktif</button>
+      <button class="tab" onclick="filterTasks('selesai', this)">Selesai</button>
+    </div>
+
+    <div class="task-list" id="taskList"></div>
+    <div class="empty-state" id="emptyState">
+      <p>Hari ini masih kosong.</p>
+      <span>Tambahkan tugas pertamamu di atas ✦</span>
+    </div>
+
+    <div class="footer">
+      <button class="clear-done" onclick="clearDone()">Hapus yang selesai</button>
+    </div>
+
+  </div>
 </div>
 
-<script>
+<!-- Firebase -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, collection, addDoc, deleteDoc, updateDoc, doc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBbVOn_DB57w4ZBZLbFR3G1CezjFvOt-bA",
+    authDomain: "todo-today-96876.firebaseapp.com",
+    projectId: "todo-today-96876",
+    storageBucket: "todo-today-96876.firebasestorage.app",
+    messagingSenderId: "29257087825",
+    appId: "1:29257087825:web:fe3692772feb591d9df170"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
   const DAYS = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
   const MONTHS = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 
-  let tasks = JSON.parse(localStorage.getItem('todo-today') || '[]');
+  let tasks = [];
   let currentFilter = 'semua';
   let currentPrio = 'tinggi';
+  let currentUser = null;
+  let unsubscribe = null;
 
   // Set date
   function setDate() {
@@ -419,56 +297,90 @@
     const month = MONTHS[now.getMonth()];
     const year = now.getFullYear();
     document.getElementById('dateLabel').textContent = `${date} ${month} ${year}`;
-    const parts = day.split('');
-    const mid = Math.floor(parts.length / 2);
-    document.getElementById('dayTitle').innerHTML = parts.slice(0, mid).join('') + '<em>' + parts.slice(mid).join('') + '</em>';
+    const mid = Math.floor(day.length / 2);
+    document.getElementById('dayTitle').innerHTML = day.slice(0, mid) + '<em>' + day.slice(mid) + '</em>';
   }
 
-  function saveTasks() {
-    localStorage.setItem('todo-today', JSON.stringify(tasks));
+  // Auth
+  window.loginGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+    try { await signInWithPopup(auth, provider); } catch(e) { alert('Login gagal: ' + e.message); }
+  };
+
+  window.logout = async () => {
+    if (unsubscribe) unsubscribe();
+    await signOut(auth);
+  };
+
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      currentUser = user;
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('appScreen').classList.add('visible');
+      document.getElementById('userAvatar').src = user.photoURL || '';
+      document.getElementById('userName').textContent = user.displayName || user.email;
+      setDate();
+      listenTasks();
+    } else {
+      currentUser = null;
+      document.getElementById('loginScreen').style.display = 'flex';
+      document.getElementById('appScreen').classList.remove('visible');
+      if (unsubscribe) unsubscribe();
+      tasks = [];
+    }
+  });
+
+  function listenTasks() {
+    const q = query(collection(db, `users/${currentUser.uid}/tasks`), orderBy('createdAt', 'desc'));
+    unsubscribe = onSnapshot(q, snapshot => {
+      tasks = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+      render();
+    });
   }
 
-  function selectPrio(btn) {
+  window.addTask = async () => {
+    const input = document.getElementById('taskInput');
+    const text = input.value.trim();
+    if (!text || !currentUser) return;
+    const now = new Date();
+    const time = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+    await addDoc(collection(db, `users/${currentUser.uid}/tasks`), {
+      text, prio: currentPrio, time, done: false, createdAt: Date.now()
+    });
+    input.value = '';
+  };
+
+  window.toggleDone = async (id) => {
+    const task = tasks.find(t => t.id === id);
+    if (!task || !currentUser) return;
+    await updateDoc(doc(db, `users/${currentUser.uid}/tasks`, id), { done: !task.done });
+  };
+
+  window.deleteTask = async (id) => {
+    if (!currentUser) return;
+    await deleteDoc(doc(db, `users/${currentUser.uid}/tasks`, id));
+  };
+
+  window.clearDone = async () => {
+    if (!currentUser) return;
+    const doneTasks = tasks.filter(t => t.done);
+    for (const t of doneTasks) {
+      await deleteDoc(doc(db, `users/${currentUser.uid}/tasks`, t.id));
+    }
+  };
+
+  window.selectPrio = (btn) => {
     document.querySelectorAll('.prio-btn').forEach(b => b.className = 'prio-btn');
     btn.classList.add('active-' + btn.dataset.prio);
     currentPrio = btn.dataset.prio;
-  }
+  };
 
-  function addTask() {
-    const input = document.getElementById('taskInput');
-    const text = input.value.trim();
-    if (!text) return;
-    const now = new Date();
-    const time = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
-    tasks.unshift({ id: Date.now(), text, prio: currentPrio, time, done: false });
-    saveTasks();
-    input.value = '';
-    render();
-  }
-
-  function toggleDone(id) {
-    const t = tasks.find(t => t.id === id);
-    if (t) { t.done = !t.done; saveTasks(); render(); }
-  }
-
-  function deleteTask(id) {
-    tasks = tasks.filter(t => t.id !== id);
-    saveTasks();
-    render();
-  }
-
-  function clearDone() {
-    tasks = tasks.filter(t => !t.done);
-    saveTasks();
-    render();
-  }
-
-  function filterTasks(filter, btn) {
+  window.filterTasks = (filter, btn) => {
     currentFilter = filter;
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     btn.classList.add('active');
     render();
-  }
+  };
 
   function render() {
     const list = document.getElementById('taskList');
@@ -477,7 +389,6 @@
     if (currentFilter === 'aktif') filtered = tasks.filter(t => !t.done);
     if (currentFilter === 'selesai') filtered = tasks.filter(t => t.done);
 
-    // Progress
     const total = tasks.length;
     const done = tasks.filter(t => t.done).length;
     const pct = total ? Math.round((done / total) * 100) : 0;
@@ -493,7 +404,7 @@
         const el = document.createElement('div');
         el.className = `task-item prio-${task.prio}${task.done ? ' done' : ''}`;
         el.innerHTML = `
-          <button class="check-btn" onclick="toggleDone(${task.id})">
+          <button class="check-btn" onclick="toggleDone('${task.id}')">
             <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
           </button>
           <div class="task-content">
@@ -503,7 +414,7 @@
               <span class="task-time">${task.time}</span>
             </div>
           </div>
-          <button class="delete-btn" onclick="deleteTask(${task.id})" title="Hapus">
+          <button class="delete-btn" onclick="deleteTask('${task.id}')">
             <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           </button>
         `;
@@ -513,11 +424,8 @@
   }
 
   document.getElementById('taskInput').addEventListener('keydown', e => {
-    if (e.key === 'Enter') addTask();
+    if (e.key === 'Enter') window.addTask();
   });
-
-  setDate();
-  render();
 </script>
 </body>
 </html>
