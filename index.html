@@ -185,9 +185,6 @@
   .clear-done { background: none; border: 1.5px solid var(--line); border-radius: 20px; padding: 6px 16px; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); cursor: pointer; font-family: 'Outfit', sans-serif; transition: all 0.2s; }
   .clear-done:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* Loading */
-  .loading { text-align: center; padding: 20px; color: var(--muted); font-size: 13px; font-style: italic; }
-
   @keyframes fadeDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes slideIn { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: translateX(0); } }
   .task-item { animation: slideIn 0.3s ease both; }
@@ -302,15 +299,15 @@
   }
 
   // Auth
-  window.loginGoogle = async () => {
+  async function loginGoogle() {
     const provider = new GoogleAuthProvider();
     try { await signInWithPopup(auth, provider); } catch(e) { alert('Login gagal: ' + e.message); }
-  };
+  }
 
-  window.logout = async () => {
+  async function logout() {
     if (unsubscribe) unsubscribe();
     await signOut(auth);
-  };
+  }
 
   onAuthStateChanged(auth, user => {
     if (user) {
@@ -338,7 +335,7 @@
     });
   }
 
-  window.addTask = async () => {
+  async function addTask() {
     const input = document.getElementById('taskInput');
     const text = input.value.trim();
     if (!text || !currentUser) return;
@@ -348,39 +345,39 @@
       text, prio: currentPrio, time, done: false, createdAt: Date.now()
     });
     input.value = '';
-  };
+  }
 
-  window.toggleDone = async (id) => {
+  async function toggleDone(id) {
     const task = tasks.find(t => t.id === id);
     if (!task || !currentUser) return;
     await updateDoc(doc(db, `users/${currentUser.uid}/tasks`, id), { done: !task.done });
-  };
+  }
 
-  window.deleteTask = async (id) => {
+  async function deleteTask(id) {
     if (!currentUser) return;
     await deleteDoc(doc(db, `users/${currentUser.uid}/tasks`, id));
-  };
+  }
 
-  window.clearDone = async () => {
+  async function clearDone() {
     if (!currentUser) return;
     const doneTasks = tasks.filter(t => t.done);
     for (const t of doneTasks) {
       await deleteDoc(doc(db, `users/${currentUser.uid}/tasks`, t.id));
     }
-  };
+  }
 
-  window.selectPrio = (btn) => {
+  function selectPrio(btn) {
     document.querySelectorAll('.prio-btn').forEach(b => b.className = 'prio-btn');
     btn.classList.add('active-' + btn.dataset.prio);
     currentPrio = btn.dataset.prio;
-  };
+  }
 
-  window.filterTasks = (filter, btn) => {
+  function filterTasks(filter, btn) {
     currentFilter = filter;
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     btn.classList.add('active');
     render();
-  };
+  }
 
   function render() {
     const list = document.getElementById('taskList');
@@ -424,8 +421,18 @@
   }
 
   document.getElementById('taskInput').addEventListener('keydown', e => {
-    if (e.key === 'Enter') window.addTask();
+    if (e.key === 'Enter') addTask();
   });
+
+  // Daftarkan fungsi ke objek window agar bisa dipanggil dari HTML (onclick)
+  window.loginGoogle = loginGoogle;
+  window.logout = logout;
+  window.addTask = addTask;
+  window.toggleDone = toggleDone;
+  window.deleteTask = deleteTask;
+  window.clearDone = clearDone;
+  window.selectPrio = selectPrio;
+  window.filterTasks = filterTasks;
 </script>
 </body>
 </html>
